@@ -1,0 +1,17 @@
+{
+  "name": "primer_server",
+  "version": "1.0.0",
+  "description": "14/09/2020",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Franco Martinez",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "google-spreadsheet": "^3.0.13",
+    "googleapis": "^59.0.0"
+  },
+  "devDependencies": {}
+}

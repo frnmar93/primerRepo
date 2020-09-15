@@ -1,0 +1,32 @@
+<script>
+    function formulario(){
+            console.log("Boton")
+            var user = document.getElementById("usuario").value;
+            var pass = document.getElementById("pass").value;
+            var data = {user: user,pass: pass};
+            google.script.run.withSuccessHandler(sesionchk).enviar(data);
+        }
+    document.getElementById("send").addEventListener("click",formulario);
+
+    function sesionchk(objeto){
+        console.log(objeto)
+
+        // if(objeto.login=="ok"){
+        //     console.log("sesion ok")
+        //     // var url = ScriptApp.getService().getUrl;           
+        //     // window.location.href = url + "?page=WEB.html";
+        // }else{
+        //     console.log("sesion no ok")
+        // }
+
+        // console.log("SESIONCHK")
+        // var obj = JSON.parse(objeto);
+        // console.log(objeto.url)
+        // var url = ScriptApp.getService().getUrl;           
+        // window.location.href = url + "?page=WEB.html";
+        window.location.href = 'https://script.google.com/macros/d/' + objeto + '/exec';
+        
+    }
+
+
+</script>

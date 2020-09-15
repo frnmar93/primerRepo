@@ -1,0 +1,12 @@
+<script>
+//FUNCIONES PRINCIPALES PRECARGA
+
+// document.getElementById("html").style.overflow = "hidden";
+google.script.run.withSuccessHandler(tabla).solicitudesContratistas();
+// google.script.run.withSuccessHandler(armarTablaOperaciones).solicitudesOperaciones();
+
+setInterval("google.script.run.withSuccessHandler(tabla2).solicitudesContratistas();",60000);
+
+
+</script>
+    

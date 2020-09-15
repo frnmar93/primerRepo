@@ -1,0 +1,335 @@
+<script>
+//FUNCIONES POSCARGA
+
+M.AutoInit();
+// google.script.run.withSuccessHandler(perfil).userdb();
+console.log(nombre)
+console.log("____")
+
+//setInterval("M.toast({html: 'I am a toast!'})",3000);
+
+document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.dropdown-trigger');
+    var instances = M.Dropdown.init(elems);
+});
+
+
+document.addEventListener('DOMContentLoaded', function() {
+  console.log("termino")
+  google.script.run.withSuccessHandler().asigna('prueba');
+  // window.sessionStorage.setItem('rightSidebarState',"nada por aqui")
+  // document.getElementById('usuario').focus();
+
+});
+
+
+$('#contenedorLogin').submit(function (e) { 
+    e.preventDefault();
+    console.log('al fin la puta madre')
+    
+    formulario();
+});
+
+// window.sessionStorage
+
+$('.menuIcon').click(function(e){
+  console.log("click")
+  console.log(e.target.tagName)
+  $e.target.toggle();
+});
+
+
+function rightPanel(e){
+google.script.run.withSuccessHandler(mostrar).paraSidebar(e.target.getAttribute('fila'));
+}
+// function rightPanel(e){
+//   if($('.rightSidebar').is(":hidden")){$('.rightSidebar').show}
+//   if(window.sessionStorage.getItem('rightSidebarState')=="nada por aqui"){
+//     // console.log(window.sessionStorage.getItem('rightSidebarState'))
+//     $('.rightSidebar').toggle();
+//     window.sessionStorage.setItem('rightSidebarState', e.target.getAttribute('fila'));
+//     google.script.run.withSuccessHandler(mostrar).paraSidebar(e.target.getAttribute('fila'));
+//     // console.log(window.sessionStorage.getItem('rightSidebarState'))
+//   }else{
+//     // console.log('_______________')
+//     // console.log(window.sessionStorage.getItem('rightSidebarState'))
+//     // console.log(e.target.getAttribute('fila'))
+  
+//     if(window.sessionStorage.getItem('rightSidebarState')==e.target.getAttribute('fila')){
+//       // console.log('pruebaaaaaa1')
+//       // console.log('salio la misma fila asi que oculto')
+//       // console.log(window.sessionStorage.getItem('rightSidebarState'))   
+//       $('.rightSidebar').toggle();
+//       window.sessionStorage.setItem('rightSidebarState',e.target.getAttribute('fila'));
+//       // console.log(window.sessionStorage.getItem('rightSidebarState'))
+      
+//     }else{
+//       // console.log('pruebaaaaaa2')
+//       // console.log('salio otra fila asi que actualizo')
+//       window.sessionStorage.setItem('rightSidebarState',e.target.getAttribute('fila'));
+//       google.script.run.withSuccessHandler(mostrar).paraSidebar(e.target.getAttribute('fila'));
+
+//     }
+//   }
+// }
+
+function expandirIframe(ev){
+  // console.log($('.iframeMaps').css('height'))
+  if($('.iframeMaps').css('height')=="180px"){
+    $('.iframeMaps').css('height','250px')
+    $('.mapaSidebar').css('height','250px')
+  }else{
+    $('.iframeMaps').css('height','180px')
+    $('.mapaSidebar').css('height','180px')
+  }
+}
+
+function mostrar(tabla){
+  
+  var obj = JSON.parse(tabla)[0];
+  $('#Principal').attr('fila',obj[24]);
+  // var toSearch = obj[8].replace(/ /g,"+");
+  var color = "#f53930";
+  switch (obj[26]){
+    case "A ordenar": color = "#f53930";
+    break;
+    case "En curso": color = "#e6d501";
+    break;
+    case "Pendiente": color = "#1079b7";
+    break;
+    default: color = "black";
+    break;
+  };
+  var NombreCliente = obj[2]; 
+  
+  var ubicacionTransformada = parse_gps(obj[8]);
+  if(ubicacionTransformada.length>1){
+    var ubi = ubicacionTransformada[0]+","+ubicacionTransformada[1];
+  }else{
+    var ubi = ubicacionTransformada[0];
+  }
+
+// console.log(obj[32])  
+
+if (obj[32]==true){
+  var conformeContratista = "checked";
+  // console.log('valor contratista true')
+}else{
+  var conformeContratista = " ";
+  // console.log('valor contratista false')
+}
+
+google.script.run.withSuccessHandler(cargaGuest).invitados(obj[24]);
+// google.script.run.withSuccessHandler(armarTablaOperaciones).solicitudesOperaciones();
+
+                          
+$('#Principal').empty();
+  
+  
+  $('#Principal').append(`
+  <div class="mapaSidebar cartaSidebar noPadding">
+    <iframe class="iframeMaps" src="https://maps.google.com/maps?hl=es&amp;q=${ubi}&amp;near=cordoba,argentina&amp;ie=UTF8&amp;t=k&amp;z=15&amp;iwloc=addr&amp;output=embed" width="100%" height="180" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" allowfullscreen></iframe>
+    <div class="material-icons mapsButton" onclick="expandirIframe(event)">zoom_out_map</div>
+  </div>
+  <div class="cartaSidebar">
+    <div class="tituloContenedorPrincipal">
+      <h2 class="nombreClienteSidebar">${NombreCliente}</h2>
+      <div class="badgeFran" style="background-color:${color}">${obj[26]}</div>
+    </div>
+    <div>  
+      <ul class="listaCartaSidebar noMargin" style="margin-top: 5px !important;">
+        <li>${obj[18]}</li>
+        <li>${obj[7]}</li>
+      </ul>
+    </div>
+  </div>  
+  <div class="GuestContainer cartaSidebar">
+      <div class="checkboxSidebar" style="width: -webkit-fill-available;">Tecnicos asignados</div>
+      <div class="iconsInitialsContainer"></div>
+  </div>
+  <div class="cartaSidebar">
+    <div>Comentarios</div>
+    <textarea class="materialize-textarea sidebarDatosInput" id="principalComentarios">${obj[28]}</textarea>
+  </div>
+  <div>
+    <button class="guardarPrincipal" onclick="guardarPrincipal(event)">Guardar</button>
+  </div>    
+  `);
+
+  
+  // console.log(ubi)
+  $('#Datos').empty();
+  var html = `
+    <div class="sideBarDatositem">
+      <input id="datosNombre" class='materialize-textarea sidebarDatosInput' value='${obj[2]}'>
+      <label for="datosNombre">NOMBRE</label>
+      
+      <input id="datosCorreo" class='materialize-textarea sidebarDatosInput' value='${obj[1]}'>
+      <label for="datosCorreo">CORREO</label>
+      
+      <input id="datosTelefono" class='materialize-textarea sidebarDatosInput' value='${obj[4]}'>
+      <label for="datosTelefono">TELEFONO</label>
+      
+      <input id="datosDireccion" class='materialize-textarea sidebarDatosInput' value='${obj[6]}'>
+      <label class="labelSidebarDatos" for="datosDireccion">DIRECCION</label>
+      
+      <input id="datosBarrio" class='materialize-textarea sidebarDatosInput' value='${obj[18]}'>
+      <label for="datosBarrio">BARRIO</label>
+      
+      <input id="datosLocalidad" class='materialize-textarea sidebarDatosInput' value='${obj[7]}'>
+      <label for="datosLocalidad">LOCALIDAD</label>
+      
+      <input id="datosUbicacion" class='materialize-textarea sidebarDatosInput' value='${ubi}'>
+      <label for="datosUbicacion">UBICACION</label>
+      
+      <input id="datosAltura" class='materialize-textarea sidebarDatosInput' value='${obj[9]}' readonly="readonly">
+      <label for="datosAltura">ALTURA</label>
+      
+      <input id="datosRouter" class='materialize-textarea sidebarDatosInput' value='${obj[12]}' list="siNo" autocomplete="off">
+      <label for="datosRouter">ROUTER</label>
+
+      <datalist id="siNo">
+        <option value="Si">
+        <option value="No">
+      </datalist>
+          
+      <input id="datosPago" class='materialize-textarea sidebarDatosInput' value='${obj[20]}' readonly="readonly">
+      <label for="datosPago">COMO ABONA</label>
+      
+      <input id="datosDisponibilidad" class='materialize-textarea sidebarDatosInput' value='${obj[13]}' readonly="readonly"> 
+      <label for="datosDisponibilidad">DISPONIBILIDAD</label>
+      
+      <input id="datosNombreAlter" class='materialize-textarea sidebarDatosInput' value='${obj[14]}'>
+      <label for="datosNombreAlter">NOMBRE ALTERNATIVO</label>
+      
+      <input id="datosNumeroAlter" class='materialize-textarea sidebarDatosInput' value='${obj[15]}'>
+      <label for="datosNumeroAlter">NUMERO ALTERNATIVO</label>
+      
+      <textarea class="materialize-textarea sidebarDatosInput" id="datosComentarios">${obj[10]}</textarea>
+      <label for="datosComentarios">COMENTARIOS</label>
+    </div>
+    <div>
+    <button class="guardarDatos" onclick="guardarDatos(event)">Guardar</button>
+    </div> 
+    `;
+    var nombreClienteString = NombreCliente.replace(/ /,'+');
+    console.log(nombreClienteString)
+    html = `<iframe class="formIframe" src="https://docs.google.com/forms/d/e/1FAIpQLSd1tJNzi6q-rmkz_91OjFRno6NIdco_8JMTl2Hghw3_1aSyWw/viewform?embedded=true?usp=pp_url&entry.309049611=${nombreClienteString}" frameborder="0" marginheight="0" marginwidth="0">Cargando…</iframe>`;
+  
+    $('#Datos').append(html);
+
+    // $('#Otros').empty();
+    // $('#Otros').append(`
+      
+    // `);
+
+}
+
+function guardarPrincipal(event){
+  var dato = $( "select#estadoSidebar option:checked" ).val();
+  var contratistaOk = $('#chkboxSidebar').prop('checked');
+  // console.log(contratistaOk)
+  var fila = $('#Principal').attr('fila');
+  var coment = $('#principalComentarios').val();
+  var columnaEstado = 27;
+  // google.script.run.estado(dato,fila,columnaEstado);
+  // console.log(coment)
+  // console.log(fila)
+  google.script.run.comentarios(coment,fila);
+  // google.script.run.contratistaCheck(contratistaOk,fila);
+}
+
+function guardarDatos(event){
+  var fila = $('#Principal').attr('fila');
+  var datos = {
+      nombre: $('#datosNombre').val(),
+      correo: $('#datosCorreo').val(),
+      telefono: $('#datosTelefono').val(),
+      direccion: $('#datosDireccion').val(),
+      barrio: $('#datosBarrio').val(),
+      localidad: $('#datosLocalidad').val(),
+      ubicacion: $('#datosUbicacion').val(),
+      altura: $('#datosAltura').val(),
+      router: $('#datosRouter').val(),
+      pago: $('#datosPago').val(),
+      disponibilidad: $('#datosDisponibilidad').val(),
+      nombreAlter: $('#datosNombreAlter').val(),
+      numeroAlter: $('#datosNumeroAlter').val(),
+      comentarios: $('#datosComentarios').val(),
+      fila: fila,
+  };
+  // console.log(datos)
+  var objeto = JSON.stringify(datos);
+  google.script.run.cargaDatos(objeto);
+}
+
+
+
+function parse_gps( input ) {
+
+if( input.indexOf( 'N' ) == -1 && input.indexOf( 'S' ) == -1 &&
+       input.indexOf( 'W' ) == -1 && input.indexOf( 'E' ) == -1 ) {
+       return input.split(',');
+}
+
+var parts = input.split(/[°'"]+/).join(' ').split(/[^\w\S]+/);
+
+var directions = [];
+var coords = [];
+var dd = 0;
+var pow = 0;
+
+for( i in parts ) {
+
+       // we end on a direction
+       if( isNaN( parts[i] ) ) {
+
+           var _float = parseFloat( parts[i] );
+
+           var direction = parts[i];
+
+           if( !isNaN(_float ) ) {
+               dd += ( _float / Math.pow( 60, pow++ ) );
+               direction = parts[i].replace( _float, '' );
+           }
+
+           direction = direction[0];
+
+           if( direction == 'S' || direction == 'W' )
+               dd *= -1;
+
+           directions[ directions.length ] = direction;
+
+           coords[ coords.length ] = dd;
+           dd = pow = 0;
+
+       } else {
+
+           dd += ( parseFloat(parts[i]) / Math.pow( 60, pow++ ) );
+
+       }
+
+}
+
+if( directions[0] == 'W' || directions[0] == 'E' ) {
+       var tmp = coords[0];
+       coords[0] = coords[1];
+       coords[1] = tmp;
+}
+
+return coords;
+}
+
+
+function cargaGuest(template){
+  console.log(template)
+  $('.iconsInitialsContainer').append(template)
+}
+
+
+// $(document).ready(function(){
+//   var intials ="FM";
+//   var profileImage = $('#profileImage').text(intials);
+// });
+</script>
+

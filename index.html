@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- Importe Fuente Ubuntu -->
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Ubuntu:regular">
+    <!-- Cargo JQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    
+    <link type="text/css" rel="stylesheet" href="index.css"  media="screen,projection"/>
+    <script src="index_sript.js"></script>
+    <script src="index_sript2.js"></script>
+    <script src="index_sript3.js"></script>
+    
+
+
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <style>
+        @media only screen and (max-width: 599px){
+        #headerSearchConteiner{
+            width: 40% !important;
+            
+        }       
+    } 
+    .headerMain{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 35px;
+        background-color: #e84941;
+        color: white !important;
+        font-size: 1.5rem;
+        width: 100%; /* hacemos que la cabecera ocupe el ancho completo de la página */
+        left: 0; /* Posicionamos la cabecera al lado izquierdo */
+        top: 0; /* Posicionamos la cabecera pegada arriba */
+        position: fixed; /* Hacemos que la cabecera tenga una posición fija */
+        z-index: 2;
+    }
+
+    .headerLeft{
+        display: flex;
+        flex-flow: row;
+        align-items: center;
+        margin-left: 10px;
+    }
+        
+    .headerRight{
+        display: flex;
+        flex-flow:row-reverse;
+        align-items: center;
+        margin-right: 10px;
+    }
+
+    .headerMenu{
+        margin-right: 10px;
+    }
+
+    #headerProfileContainer{
+        display: flex;
+        align-items: center;
+        margin-left: 10px;
+    }
+
+    #headerSearchConteiner{
+        display: flex;
+        align-items: center;
+        margin: 0;
+    }
+
+    #headerInput{
+        margin: 0;
+        height: 1.5rem;
+    }
+
+    .vAlign{
+        display: flex;
+        align-items: center;
+    }     
+
+    body{
+        background: #d6d6d6;
+        font-family: Ubuntu, -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;
+    }
+
+    .leftSidebar{
+        background-color: darkblue;
+        height: 100vh;
+        width: 499px;
+        position: fixed;
+        z-index: 1;
+        display: none;
+    }
+    .contenedor{
+        padding-top: 45px;
+        display: flex;
+    }
+    .principal{
+        display: flex;
+        justify-content: center;
+        inline-size: -webkit-fill-available;
+        text-align: center;
+        margin-right: 15px;
+        margin-left: 15px;
+
+    }
+    .colIzquierda{
+        width: 450px;
+        margin-right: 15px;
+    }
+    .colDerecha{
+        width: 450px;
+    }
+
+    .noMargin{
+        margin: 0 !important;
+    }
+    .noPadding{
+        padding: 0 !important;
+    }
+    
+
+   
+
+
+
+.boxTopMargin{
+    margin-top: 10px;
+}
+
+
+.listains{
+    max-height: calc(100vh - 80px);
+    overflow-y: auto;
+}
+
+.listasOpe{
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+
+.ope {
+  display: flex;
+  flex-direction: column;
+
+}
+
+
+.listas{
+  background-color: white;
+  min-height: 2em;
+  text-align: left;
+  box-shadow: 1px 1px 15px 0px rgba(0,0,0,0.20);
+
+}
+
+.titulos{
+  background-color: #6f6f6f;
+  margin-bottom: .15em;
+  border-top-left-radius: .5em;
+  border-top-right-radius: .5em;
+  color: white;
+  font-weight: 500;
+  box-shadow: 1px 1px 15px 0px rgba(0,0,0,0.20);
+}
+
+
+    /* width */
+    ::-webkit-scrollbar {
+      width: 3px;
+    }
+    
+    /* Track */
+    ::-webkit-scrollbar-track {
+        opacity: 0;
+     
+    }
+     
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+      background: rgb(170, 170, 170); 
+    }
+    
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgb(124, 124, 124); 
+    }
+
+    table{
+  width: 100%;
+  font-weight: 600;
+    }
+
+    tr{
+    display: flex;
+    justify-content: space-between;
+    padding: .2em;
+    border-bottom: .5px solid #5f636857;
+    flex-wrap: wrap;
+    }
+    tr:hover{
+    background-color: rgba(0,0,0,0.07);
+    }
+    td{
+    padding: 0px;
+    }
+    td > table{
+    background-color: beige;
+
+    }
+
+    .subdetalles{
+    font-size: smaller;
+    font-weight: 400;
+
+    }
+
+    .contSombra{
+    box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+    }
+
+    .barraExp{
+    display: none;
+    margin: 5px 0px 10px 0px;
+    width: 100%;
+    }
+
+    .subdetalles > tbody > tr{
+    padding: 1px;
+    }
+
+
+    .nombres_mainRow{
+    flex: 1 1 auto;
+    color: black;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    max-width: 310px;
+    
+    }
+
+    .contenedorBadgeDerecha{
+    display: flex !important;
+    }
+
+    .tableIcons{
+    font-size: 1.5rem;
+    margin-left: .2em;
+    }
+
+  
+    .menuIcon{
+        cursor: pointer;
+    }
+
+
+    .badgeFran{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: .7em;
+    /*padding: .15em .5em .15em .5em;*/
+    color: white;
+    border-radius: .5em;
+    font-weight: 500;
+    margin-left: .2rem;
+    width: 58px;
+    height: 19px;
+    align-content: center;
+    text-align: center; /*OJO*/
+    }
+
+    .rightSidebar{
+        box-shadow: 1px 1px 15px 0px rgba(0,0,0,0.20);
+        background-color: #f1f1f1 ;
+        width: 500px;
+        min-width: 372px;
+        /* display: none; */
+    }
+    .sideBaritem{
+        padding: .4rem !important;
+        margin: 0 !important;
+        height: 10px !important;
+}
+       
+
+    
+    /* Style the tab */
+    .tab {
+      overflow: hidden;
+      background-color: #a9a9a9;
+    }
+
+    .tablinks{
+        font-weight: 500;
+    } 
+    
+    /* Style the buttons inside the tab */
+    .tab button {
+      background-color: inherit;
+      float: left;
+      border: none;
+      outline: none;
+      cursor: pointer;
+      padding: 14px 16px;
+      transition: 0.3s;
+      font-size: 17px;
+    }
+    
+    /* Change background color of buttons on hover */
+    .tab button:hover {
+      background-color: #ddd;
+    }
+    
+    /* Create an active/current tablink class */
+    .tab button.active {
+      background-color: #f1f1f1;
+    }
+    
+    /* Style the tab content */
+    .tabcontent {
+      display: none;
+      padding: 12px 12px;
+      border-top: none;
+    }
+    
+    .nombreClienteSidebar{
+        font-size: 1.7rem;
+        margin: 0;
+    }
+
+    .cartaSidebar{
+        box-shadow: 1px 1px 15px 0px rgba(0,0,0,0.20);
+        padding: 10px;
+        margin-bottom: 10px;
+        
+    }
+
+    .mapaSidebar{
+        height: 180px;
+        display: flex;
+        flex-direction: row-reverse;
+    }
+
+    .iframeMaps{
+        width: -webkit-fill-available;
+        height: 180px;
+    }
+
+    .mapsButton{
+        position: absolute;
+        width: 30px;
+        height: 30px;   
+        cursor: pointer;
+        background-color: rgb(0,0,0,.4);
+        color: white;
+        padding: 2px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .sidebarDatosInput{
+        position: relative !important;
+        top: 7px !important;
+        height: 1.5rem !important;
+        background-color: rgb(0 0 0 / 0.06) !important;
+        border: none !important;
+        margin: 0 0 3px 0 !important;
+        padding: 0 3px !important;
+        box-sizing: border-box !important;
+    } 
+
+    .checkboxSidebarContainer{
+        font-size: 1.1rem !important;
+        display: flex !important;
+        justify-content: space-between !important;
+        color: black;
+        align-items: center !important;
+    }
+    .checkboxSidebar{
+        font-size: 1rem !important;
+        color: black !important;    
+    }
+
+    #chkboxSidebar{
+        position: initial !important;
+        opacity: 100 !important;
+        pointer-events: initial !important;
+   
+    }
+
+    .tituloContenedorPrincipal{
+        display: flex;
+        justify-content: space-between;
+        
+    }
+
+    
+    #datosComentarios{
+        line-height: normal !important;
+        overflow-y: auto !important;
+        resize: vertical !important;
+        min-height: 4rem !important;
+    }
+    .labelSidebarDatos{
+        font-size: .8rem;
+    }
+
+    .gmnoscreen{
+        display: none !important;
+    }
+    .checkboxSidebarEstado{
+        height: 30px;
+    }
+    #estadoSidebar{
+        display: initial !important;
+        padding: 2px !important;
+        width: auto !important;
+        background-color: transparent !important;
+    }
+    #estadoSidebarContainer{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        
+    }
+  
+    option{
+        background-color: white;
+    }
+
+    #principalComentarios{
+        min-height: 100px !important;
+        overflow: auto !important;
+        background-color: #f1f1f1 !important;
+    }
+
+    .profileImage {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: #512DA8;
+        font-size: 19px;
+        color: #fff;
+        text-align: center;
+        line-height: 40px;
+        /* margin: 20px 0;*/
+    }
+
+    .guestSidebar{
+        display: flex;
+        flex-direction: column;
+    }
+
+    .GuestContainer{
+        display: flex;
+        margin-top: 5px;
+        align-items: center;
+    }
+
+    .iconsInitialsContainer{
+        display: flex;
+
+    }
+
+    .formIframe{
+        width: -webkit-fill-available;
+        height: calc(100vh - 169px);
+    }
+
+
+
+    @media only screen and (max-width: 1320px){
+        .rightSidebar {
+            min-width: 500px;
+        }
+        .principal{
+            flex-wrap: wrap; 
+        }
+        .rep{
+            margin-top: 10px;
+        }
+        .mud{
+            margin-bottom: 10px;
+        }
+        .colIzquierda{
+            margin-right: 0px;
+        }
+    }
+    @media only screen and (max-width: 1000px){
+        .rightSidebar {
+            min-width: 430px;
+        }
+    }
+    @media only screen and (max-width: 900px){
+        
+        .colDerecha {
+            width: 400px;
+        }
+        .colIzquierda {
+            width: 400px;
+        }
+    }  
+    @media only screen and (min-width: 1400px){
+        .rightSidebar {
+            min-width: 430px;
+        }
+    } 
+    @media only screen and (min-width: 1500px){
+        .rightSidebar {
+            min-width: 500px;
+        }
+    }  
+
+    </style>
+
+</head>
+
+<body>
+    <div class="headerMain">
+        <div class="headerLeft">
+            <div class="headerMenu vAlign">
+                <i class="material-icons">menu</i>    
+            </div>
+            <div class="headerIsotipo">
+                <titulo>Urbana</titulo>
+            </div>
+        </div>
+        <div class="headerRight">
+            <div id="headerProfileContainer" class="">
+                <div class="vAlign">
+                    <i class="material-icons headerProfileIcon ">account_circle</i>
+                </div>  
+                <div class="">
+                    <usuario>Franco</usuario>
+                </div>
+            </div>
+            <div id="headerSearchConteiner" class="input-field">
+                <i id="headerInputPrefix" class="material-icons ">search</i>
+                <input id="headerInput" class="" type="search" placeholder="Filtrar...">
+            </div>
+        </div>  
+    </div>
+    <div class="leftSidebar">
+    </div>
+    <div class="contenedor">
+        <div class="principal">
+            <div class="colIzquierda">
+                <div class="ins">
+                    <div id="tituloINS" class="tituloins titulos" onclick="expandir(event)" >INSTALACIONES</div>
+                    <div class="listains listas">
+                        <table id="tablaInstalaciones">
+                             <!-- ACA VA LA TABLA -->
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="colDerecha" >
+                <div class="ope">
+                    <div class="rep">
+                      <div class="titulorep titulos">REPARACIONES</div>
+                      <div class="listarep listas listasOpe">
+                        <table id="tablaReparaciones">
+                          <!-- ACA VA LA TABLA -->
+                           </table>
+                      </div>
+                    </div>
+                    
+                    <div class="inf boxTopMargin">
+                      <div class="tituloinf titulos">INFRAESTRUCTURA</div>
+                      <div class="listainf listas listasOpe">
+                        <table id="tablaInfraestructura">
+                            <!-- ACA VA LA TABLA -->
+                        </table>
+                      </div>
+                    </div>
+                    
+                    <div class="ret boxTopMargin">
+                      <div class="tituloret titulos">RETIROS</div>
+                      <div class="listaret listas listasOpe">
+                        <table id="tablaRetiros">
+                            <!-- ACA VA LA TABLA -->
+                        </table>
+                      </div>
+                    </div>
+                     
+                    <div class="mud boxTopMargin">
+                      <div class="titulomud titulos">MUDANZAS</div>
+                      <div class="listamud listas listasOpe">
+                        <table id="tablaMudanza">
+                           <!-- ACA VA LA TABLA -->
+                        </table>
+                      </div>
+                    </div>
+                </div>  
+            </div>
+        </div>
+        <div class="rightSidebar">  
+            <div class="tab">
+                <button class="tablinks" onclick="SidebarTab(event, 'Principal')" id="defaultOpen">Principal</button>
+                <button class="tablinks" onclick="SidebarTab(event, 'Datos')">Datos</button>
+                <button class="tablinks" onclick="SidebarTab(event, 'Otros')">Otros</button>
+            </div>
+            
+            <div id="Principal" class="tabcontent">
+                <div style="display: flex; align-content: center; justify-content: center;flex-wrap: wrap;font-size: 3rem;">
+                    <h3 style="width: 100%; text-align: center;">Seleccione un cliente</h3> 
+                    <h3 class="material-icons" style="font-size: larger;" >exit_to_app</h3>
+                </div>
+            </div>
+
+            <div id="Datos" class="tabcontent">
+                <div style="display: flex; align-content: center; justify-content: center;flex-wrap: wrap;font-size: 3rem;">
+                    <h3 style="width: 100%; text-align: center;">Seleccione un cliente</h3> 
+                    <h3 class="material-icons" style="font-size: larger;" >exit_to_app</h3>
+                </div>>
+            </div>
+            
+            <div id="Otros" class="tabcontent">
+                <!-- <h3>Nada por aqui aún</h3> -->
+                <!-- <iframe src="calendar.google.com.ar" frameborder="0" width="100%" height="800px"></iframe> -->
+                <iframe src= "https://www.google.com/calendar/embed?color=%23f83a22&deb=-&embed_style=WyJhdDplbWI6c3QiLCIjZTBlMGUwIiwiI2VkZWRlZCIsIiM0MTg0ZjMiLCJyb2JvdG8iLCIjNjM2MzYzIiw1MDAsIiNmZmYiXQo&eopt=0&mode=agenda&showCalendars=1&showPrint=0&showTitle=0&showTz=0&src=mgrupo.com.ar_99at4k0mmg2ubbb0e65ru52g1g@group.calendar.google.com" style="border: 0" width="100%" height="800" frameborder="0" scrolling="no"></iframe>
+            </div>
+        </div>
+    </div>
+
+
+    
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    
+    
+    <?!= include("WEB.JS2")?>
+    <?!= include("WEB.JS")?>
+    <?!= include("WEB.JS3")?>
+    
+</body>
+<script>
+
+</script>
+
+</html>
